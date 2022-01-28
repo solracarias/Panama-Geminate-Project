@@ -241,7 +241,7 @@ Cumulative record length for assembly p_furcifer_blobt_nb. The grey line shows c
 #### blob plot
 ```{r}
 # blob plot
-knitr::include_graphics('')
+knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/p_furcifer_blob_results/p_furcifer_blobt_nb.blob.circle.png')
 ```
 
 Blob plot of base coverage in p against GC proportion for records in assembly p_furcifer_blobt_nb. Records are coloured by phylum. Circles are sized in proportion to record length Histograms show the distribution of record length sum along each axis.
