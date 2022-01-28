@@ -350,7 +350,7 @@ Blob plot of base coverage in p against GC proportion for records in ***C. multi
 
 ```{r eval=T, include=T}
 blob_results<- read.csv("/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/c_multilineata_blob_results/2a719209-31ee-4daa-bf74-cf1424f52538.csv",header = T, sep = ",")
-#library(tidyverse)
+library(tidyverse)
 blob_results<-select(blob_results, -1)
 blob_results2<-select(blob_results, 1,8,2,3,7,4,5,6)
 blob_results2<-select(blob_results2, -1)
