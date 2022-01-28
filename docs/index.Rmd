@@ -8,7 +8,7 @@ output:
     toc_depth: 3
     toc_float: yes
 ---
-# Genome de contamination Analysis
+# Genome contamination Analysis
 
 This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook for contamination analysis in genome assembly projects. Here, we explain how we ran contamination analysis using blobtools kit.
 
