@@ -1,5 +1,5 @@
 ---
-title: "Genome Decontamination"
+title: "Panama Geminate Project"
 output: 
   html_document:
     fig_caption: yes
@@ -10,8 +10,7 @@ output:
 ---
 # Genome de contamination Analysis
 
-This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook for de_contamination analysis in genome assembly projects. Here, I explain how to run two different de-contamination programs (kraken2 and blobtools).
-
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook for de_contamination analysis in genome assembly projects. Here, we explain how we ran  de-contamination analyis with   blobtools.
 
 What is blobtools?
 
@@ -20,7 +19,7 @@ Is "A modular command-line solution for visualisation, quality control and taxon
 
 #### Preparing files for blobtools
 
-First, you need to blast your assembly to know nt databases. for this we will used blastn program. we will used our job file blast.job to the program in the server.
+First, we blast your genome assemblies to know nt databases (eg. NCBI) by using blastn program. 
 
 ```{bash eval=FALSE, include=T}
 # /bin/sh
@@ -48,8 +47,7 @@ blastn -db /data/genomics/db/ncbi/db/latest_v4/nt/nt -query HPA_04_pilon.fasta -
 echo = `date` job $JOB_NAME done
 ```
 
-Second, you need to map raw reads to the genome assembly. We used bwa to map and samtools to convert from sam to ban and finally sort the bam file.
-
+Second, we map our raw reads sequences to our genome assembly. We used minimap2 to map reads and later we used samtools to convert from sam to bam and finally sort the bam file.
 
 ```{bash eval=FALSE, include=T}
 # /bin/sh
@@ -80,7 +78,7 @@ echo = `date` job $JOB_NAME done
 
 ```
 
-Add Blast results and Mapped reads to blobtools data base.
+In bloobtools we create a database with Blast results and Mapped reads.
 
 ```{bash eval=FALSE, include=T}
 qrsh -pe mthread 8
@@ -170,6 +168,7 @@ conda activate btk_env
 
 You can play with viewer to change colors on figures, tables etc. Figures and tables can be downloaded and visualized.
 
+
 ***Blobtools Results by fish species***
 
 ### ***Paranthias colonus***
@@ -223,5 +222,53 @@ datatable(blob_results2, rownames = FALSE, width = "100%", colnames = c("ID","GC
                          buttons = c("csv", "copy")))
 ```
 
+### ***Paranthias furcifer***
+#### Assembly statistics in a snail plot
+```{r include=T}
+#Snail plot/
+knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/p_furcifer_blob_results/p_furcifer_blobt_nb.snail.png')
+```
+Snail plot summary of assembly statistics for assembly p_furcifer_blobt_nb. The main plot is divided into 1,000 size-ordered bins around the circumference with each bin representing 0.1% of the 860,147,216 bp assembly. The distribution of record lengths is shown in dark grey with the plot radius scaled to the longest record present in the assembly (38,289,793 bp, shown in red). Orange and pale-orange arcs show the N50 and N90 record lengths (32,505,010 and 23,558,019 bp), respectively. The pale grey spiral shows the cumulative record count on a log scale with white scale lines showing successive orders of magnitude. The blue and pale-blue area around the outside of the plot shows the distribution of GC, AT and N percentages in the same bins as the inner plot.
 
+#### Cumulative Plot
+
+```{r}
+#cumulative plot
+knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/p_furcifer_blob_results/p_furcifer_blobt_nb.cumulative.png')
+```
+Cumulative record length for assembly p_furcifer_blobt_nb. The grey line shows cumulative length for all records. Coloured lines show cumulative lengths of records assigned to each phylum using the bestsumorder taxrule.  
+
+#### blob plot
+```{r}
+# blob plot
+knitr::include_graphics('')
+```
+
+Blob plot of base coverage in p against GC proportion for records in assembly p_furcifer_blobt_nb. Records are coloured by phylum. Circles are sized in proportion to record length Histograms show the distribution of record length sum along each axis.
+
+#### blob table with varibles and categories
+
+```{r eval=F, include=T}
+blob_results<- read.csv("//Users/solracarias/Dropbox/Panama-Geminate-Project/docs/p_furcifer_blob_results/7fc11af9-8af0-4b87-a060-df69dfa56242.csv",header = T, sep = ",")
+library(tidyverse)
+blob_results<-select(blob_results, -1)
+blob_results2<-select(blob_results, 1,8,2,3,7,4,5,6)
+blob_results2<-select(blob_results2, -1)
+#library(kableExtra)
+#blob_results %>% kbl() %>% kable_styling()
+library(DT)
+options(scipen = 999)
+datatable(blob_results2, rownames = FALSE, width = "100%", colnames = c("ID","GC","Length","Coverage","Phylum", "Class", "Family"),
+          caption =
+            htmltools::tags$caption(
+              style = "caption-side: bottom; text-align: left;",
+              "Table: ",
+              htmltools::em("blob variables and Categories")),
+          extensions = "Buttons",
+          options = list(columnDefs =
+                           list(list(className = "dt-left", targets = 0)),
+                         dom = "Blfrtip", pageLength = 10,
+                         lengthMenu = c(10, 20, 40, 70),
+                         buttons = c("csv", "copy")))
+```
 
