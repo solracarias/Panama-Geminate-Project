@@ -13,101 +13,10 @@ output:
 This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook for de_contamination analysis in genome assembly projects. Here, I explain how to run two different de-contamination programs (kraken2 and blobtools).
 
 
-### Kraken2
-
-What is kraken2?
-
-Is  "a taxonomic sequence classifier that assigns taxonomic labels to DNA sequences. Kraken examines the k-mers within a query sequence and uses the information within those k-mers to query a database. That database maps k-mers to the lowest common ancestor (LCA) of all genomes known to contain a given k-mer". (https://github.com/DerrickWood/kraken2/wiki/Manual#special-databases)
-
-To run kraken2 you need your genome assembly and the index fai file for the assembly.
-
-```{bash eval=FALSE, include=T}
-# /bin/sh
-# ----------------Parameters---------------------- #
-#$ -S /bin/sh
-#$ -q mThC.q
-#$ -pe mthread 12 -l mres=48G,h_data=4G,h_vmem=4G
-#$ -cwd                                                      
-#$ -j y
-#$ -N kraken
-#$ -o kraken.log
-#$ -m bea
-#$ -M ariasc@si.edu
-#
-# ----------------Modules------------------------- #
-module load bioinformatics/kraken
-#                                                       
-# ----------------Your Commands------------------- #
-#
-echo + `date` job $JOB_NAME started in $QUEUE with jobID=$JOB_ID on $HOSTNAME
-echo + NSLOTS = $NSLOTS
-#
-kraken2 --db /data/genomics/db/Kraken/kraken2_db/ --report kraken_report_remi --use-names --confidence --threads $NSLOTS /scratch/genomics/ariasc/ariasc_pool/krake2/HPA_04_pilon.fasta
-#
-echo = `date` job $JOB_NAME done
-```
-
-**Kraken Output**
-
-*Holocanthus passer*
-
-- 486 sequences (583.53 Mbp) processed in 295.263s (0.1 Kseq/m, 118.58 Mbp/m).
-- 413 sequences classified (84.98%)                                                     73 sequences unclassified (15.02%)
-  
-#### Exploring kmers distribution for classified sequences. 
-
-First we will get only the list of contigs and its classification
-
-```{bash eval=FALSE, include=T}
-grep "Contig" kraken2.log > kraken2_results.txt
-```
-
-Get list of human and unclassified contigs: By doing this, we are removing anything classified as bacteria, plasmids or viruses. We keep the unclassified because they might contain real contigs.
-
-```{bash eval=FALSE, include=T}
-grep "unclassified\|Homo sapiens" kraken2_results.txt | cut -f2 > assembly.fa.HsU.list
-```
-
-In order to explore kraken resuls, I download the results files and I use R to explore.
-
-```{bash eval=FALSE, include=T}
-module load bio/rclone
-rclone copy kraken2_results.txt db3:hydra_backup/
-```
-
-Exploring the results in R.
-
-```{r include=FALSE}
-library(dplyr)
-library(kableExtra)
-```
-
-```{r eval=T, include=T}
-kraken_results<-read.delim("kraken2_results_remi.txt", header = F)
-colnames(kraken_results) <-  c("Classification", "contig", "taxon", "length", "kmers")
-
-sub_kraken_results <- filter(kraken_results, taxon !="Homo sapiens (taxid 9606)" & taxon !="unclassified (taxid 0)")
-
-sub_kraken_results %>% kbl() %>% kable_styling()
-#sum(sub_kraken_results$length)
-#100222 ~100Kbp
-```
-Kraken2 found ten contigs contaminated with bacteria and archea. This 10 contigs made 100kbp.
-
-#### Filtering scaffolds with contamination
-
-Using samtools, we will extract from the assembly only the contigs identified as Human or unclassified. Bacteria, viruses and plasmids will be excluded.
-
-```{bash eval=FALSE, include=T}
-module load bioinformatics/samtools
-xargs samtools faidx original_assembly.fa < assembly.fa.HsU.list > new_assembly.fa
-```
-
-### Blobtools
-
 What is blobtools?
 
 Is "A modular command-line solution for visualisation, quality control and taxonomic partitioning of genome dataset" (https://github.com/DRL/blobtools)
+
 
 #### Preparing files for blobtools
 
@@ -115,10 +24,10 @@ First, you need to blast your assembly to know nt databases. for this we will us
 
 ```{bash eval=FALSE, include=T}
 # /bin/sh
-# ----------------Parameters---------------------- #        
+# ----------------Parameters---------------------- #      
 #$  -S /bin/sh      
 #$ -pe mthread 12       
-#$ -q mThC.q                                                  
+#$ -q mThC.q                                              
 #$ -l mres=96G,h_data=8G,h_vmem=8G       
 #$ -cwd
 #$ -j y                             
@@ -141,127 +50,178 @@ echo = `date` job $JOB_NAME done
 
 Second, you need to map raw reads to the genome assembly. We used bwa to map and samtools to convert from sam to ban and finally sort the bam file.
 
-```{bash eval=FALSE, include=T}
-#Index genome assembly
-bwa index -p HPA_04_pilon.fasta
-
-#run bwa
-bwa mem -t $NSLOTS reads/HPA_04_R1.fastq reads/HPA_04_R2.fastq > HPA_04_pilon_bwa.sam
-#comvert to bam and sort with samtools
-samtools view -bu -@ $NSLOTS HPA_04_pilon_bwa.sam | samtools sort -T HPA_04 -O bam -@ $NSLOTS -l 9 -m 2G -o HPA_04_pilon_bwa_aligned_sorted.bam
-```
-
-#### Running blobtools
-
-First, you need to create a database with blast and mapping files
 
 ```{bash eval=FALSE, include=T}
-# /bin/sh                     
-# ----------------Parameters------------#
-#$ -S /bin/sh 
-#$ -q mThM.q    
-#$ -l mres=24G,h_data=24G,h_vmem=24G,himem
-#$ -cwd 
-#$ -j y 
-#$ -N blob_create  
-#$ -o blob_create.log   
+# /bin/sh
+# ----------------Parameters---------------------- #        
+#$  -S /bin/sh      
+#$ -pe mthread 20      
+#$ -q mThM.q
+#$ -l mres=96G,h_data=8G,h_vmem=8G,himem       
+#$ -cwd
+#$ -j y                             
+#$ -N acti_blast    
+#$ -o acti_blast.log      
 #$ -m bea 
-#$ -M ariasc@si.edu
-#              
-# ----------------Modules------------ #
-module load bioinformatics/blobtools
-#
-# ----------------Your_Commands---- #
-#
+#$ -M ariasc@si.edu                                 
+#     
+# ----------------Modules------------------------- #
+source ~/.bashrc
+conda activate minimap2
+module load bioinformatics/samtools/1.9        
+#     
+# ----------------Your Commands------------------- #      
+#  
 echo + `date` job $JOB_NAME started in $QUEUE with jobID=$JOB_ID on $HOSTNAME
-#                                         
-blobtools create \                        
-  -i HPA_04_pilon.fasta \                 
-  -t HPA_blast.out \                      
-  -b HPA_04_pilon_bwa_aligned_sorted.bam \
-  -o HPA_04_blob                          
-#                                         
+echo + NSLOTS = $NSLOTS 
+minimap2 -ax map-hifi -t 20 /scratch/genomics/ariasc/Panama_geminant_project/c_atrilobata/chromis_atrilobata_hifiasm_asm_bp_p_ctg.fasta /scratch/stri_ap/ariasc_data/owen_fish_genomes_data/files.rc.byu.edu/owen_fish/22D/22D_ccs/m54336U_210226_220508.Q20.fastq | samtools sort -@20 -O BAM -o c_atriolobata_mapped.bam -
+#                               
 echo = `date` job $JOB_NAME done
+
 ```
 
-Second to view/summarize results you need to process the .json file or you can directly plot the results.
-
-```{bash eval=FALSE, include=T}
-#you can used the interactive node in hydra since it do not uses to much memmory or time
-qrsh
-#to view results in as a table.
-blobtools view -i HPA_04_blob.blobDB.json -o ./
-#to plot results
-blobtools plot -i HPA_04_blob.blobDB.json -o ./
-```
-
-This created two png files with the plots. Look at file in project folder.
-
-```{r}
-knitr::include_graphics('HPA_04_blob.blobDB.json.bestsum.phylum.p7.span.100.blobplot.bam0.png')
-```
-
-```{r}
-knitr::include_graphics('HPA_04_blob.blobDB.json.bestsum.phylum.p7.span.100.blobplot.read_cov.bam0.png')
-```
-
-### Bloobtools2
+Add Blast results and Mapped reads to blobtools data base.
 
 ```{bash eval=FALSE, include=T}
 qrsh -pe mthread 8
 module load bio/blobtools/2.6.3 
 #Create a BlobDir
-blobtools create --fasta /scratch/genomics/ariasc/remy/blob/HPA_04_pilon.fasta HPA_04_pilon
+#blobtools create --fasta /scratch/genomics/ariasc/remy/blob/HPA_04_pilon.fasta HPA_04_pilon
+
+blobtools create --fasta /scratch/genomics/ariasc/Panama_geminant_project/c_atrilobata/chromis_atrilobata_hifiasm_asm_bp_p_ctg.fasta c_atrilobata_blobt_nb  
+
+blobtools create --fasta /scratch/genomics/ariasc/Panama_geminant_project/c_cyanea/chromis_cyanea.asm.bp.p_ctg.fasta c_cyanea_blobtnb
+
+blobtools create --fasta /scratch/genomics/ariasc/Panama_geminant_project/c_fulva/c_fulva_hifiasm.asm.bp.p_ctg.fa c_fulva_blobt_nb  
+
+blobtools create --fasta /scratch/genomics/ariasc/Panama_geminant_project/c_multilineata/chromis_multilineata.asm.bp.p_ctg.fasta  c_multilineata_blobt_nb
+
+blobtools create --fasta /scratch/genomics/ariasc/Panama_geminant_project/p_colonus/p_colonus_hifiasm.asm.bp.p_ctg.fa p_colonus_blobt_nb
+
+blobtools create --fasta /scratch/genomics/ariasc/Panama_geminant_project/p_furcifer/paranthias_furcifer_hifiasm.asm.bp.p_ctg.fa p_furcifer_blobt_nb
+
+blobtools create --fasta /scratch/genomics/ariasc/Panama_geminant_project/A_troshelii/A_troshelli_hifiasm.asm.bp.p_ctg.fa  a_troshelii_blobt_nb
 
 #Add BLAST hits
-blobtools add --threads 8 --hits /scratch/genomics/ariasc/remy/blob/HPA_blast2.out --taxrule bestsumorder --taxdump /scratch/genomics/ariasc/remy/blob/blopbtools2_run/taxdump HPA_04_pilon
+blobtools add --threads 8 --hits /scratch/genomics/ariasc/Panama_geminant_project/c_atrilobata/c_atrilobata_blast.out --taxrule bestsumorder --taxdump /scratch/genomics/ariasc/remy/blob/blopbtools2_run/taxdump c_atrilobata_blobt_nb 
+
+blobtools add --threads 8 --hits /scratch/genomics/ariasc/Panama_geminant_project/c_cyanea/c_cyanea_blast.out --taxrule bestsumorder --taxdump /scratch/genomics/ariasc/remy/blob/blopbtools2_run/taxdump c_cyanea_blobtnb
+
+blobtools add --threads 8 --hits /scratch/genomics/ariasc/Panama_geminant_project/c_fulva/c_fulva_blast.out  --taxrule bestsumorder --taxdump /scratch/genomics/ariasc/remy/blob/blopbtools2_run/taxdump c_fulva_blobt_nb
+
+blobtools add --threads 8 --hits /scratch/genomics/ariasc/Panama_geminant_project/c_multilineata/c_multilineata_blast.out --taxrule bestsumorder --taxdump /scratch/genomics/ariasc/remy/blob/blopbtools2_run/taxdump c_multilineata_blobt_nb
+
+blobtools add --threads 8 --hits /scratch/genomics/ariasc/Panama_geminant_project/p_colonus/p_colonus_blast.out --taxrule bestsumorder --taxdump /scratch/genomics/ariasc/remy/blob/blopbtools2_run/taxdump p_colonus_blobt_nb
+
+blobtools add --threads 8 --hits /scratch/genomics/ariasc/Panama_geminant_project/p_furcifer/p_furcifer_blast.out --taxrule bestsumorder --taxdump /scratch/genomics/ariasc/remy/blob/blopbtools2_run/taxdump p_furcifer_blobt_nb
+
+blobtools add --threads 8 --hits /scratch/genomics/ariasc/Panama_geminant_project/A_troshelii/a_troshelii_blast.out --taxrule bestsumorder --taxdump /scratch/genomics/ariasc/remy/blob/blopbtools2_run/taxdump a_troshelii_blobt_nb
 
 #Add mapping coverage
-blobtools add --threads 8 --cov /scratch/genomics/ariasc/remy/blob/HPA_04_pilon_bwa_aligned_sorted.bam HPA_04_pilon
+blobtools add --threads 8 --cov /scratch/genomics/ariasc/Panama_geminant_project/c_atrilobata/c_atriolobata_mapped.bam c_atrilobata_blobt_nb
 
-#Download db HPA_04_pilon folder to desktop and run blobtools view 
+blobtools add --threads 8 --cov /scratch/genomics/ariasc/Panama_geminant_project/c_cyanea/c_cyanea_mapped.bam c_cyanea_blobtnb
 
-rclone copy HPA_04_pilon db3:hydra_backup/
+blobtools add --threads 8 --cov /scratch/genomics/ariasc/Panama_geminant_project/c_fulva/c_fulva_mapped.bam c_fulva_blobt_nb
 
-#Create interactive html page with the blobtools results. this command was run in my personal mac computer were I install blobtools2 using conda.
+blobtools add --threads 8 --cov /scratch/genomics/ariasc/Panama_geminant_project/c_multilineata/c_multilineata_mapped.bam c_multilineata_blobt_nb
+
+blobtools add --threads 8 --cov /scratch/genomics/ariasc/Panama_geminant_project/p_colonus/p_colonus_mapped.bam p_colonus_blobt_nb
+
+blobtools add --threads 8 --cov /scratch/genomics/ariasc/Panama_geminant_project/p_furcifer/p_furcifer_mapped.bam  p_furcifer_blobt_nb
+
+blobtools add --threads 8 --cov /scratch/genomics/ariasc/Panama_geminant_project/A_troshelii/a_troshelii_mapped.bam  a_troshelii_blobt_nb
+
+##adding buscos
+blobtools add --busco /scratch/genomics/ariasc/Panama_geminant_project/c_atrilobata/c_atrilobata_p1/run_actinopterygii_odb10/full_table.tsv c_atrilobata_blobt
+
+blobtools add --busco /scratch/genomics/ariasc/Panama_geminant_project/c_cyanea/c_cyanea/run_actinopterygii_odb10/full_table.tsv  c_cyanea_blobt
+
+blobtools add --busco /scratch/genomics/ariasc/Panama_geminant_project/c_fulva/c_fulva/run_actinopterygii_odb10/full_table.tsv  c_fulva_blobt
+
+blobtools add --busco /scratch/stri_ap/ariasc_data/owen_fish_genomes_data/files.rc.byu.edu/owen_fish/GeAA28/ccs/chromis_multilineata_busco/run_actinopterygii_odb10/full_table.tsv c_multilineata_blobt
+
+blobtools add --busco /scratch/genomics/ariasc/Panama_geminant_project/p_colonus/p_colonus/run_actinopterygii_odb10/full_table.tsv  p_colonus_blobt
+
+blobtools add --busco /scratch/genomics/ariasc/Panama_geminant_project/p_furcifer/output_busco/p_furcifer/run_actinopterygii_odb10/full_table.tsv p_furcifer_blobt
+
+#Download db  folder to desktop and run blobtools viewer 
+
+rclone copy blob_database  db3:hydra_backup/
+
+#Create interactive html page with the blobtools results. this command was run in my personal mac computer were I install blobtools2 using conda. remember to run this command from the folder where blobtools was install or make it to the PATH.
+
 #activate conda enviroment for blobtools2
 conda activate btk_env
-./blobtools view --remote /Users/solracarias/Desktop/HPA_04_pilon
+./blobtools view --remote /Users/solracarias/Dropbox/de_contamination_geminate_panama/c_atrilobata_blobt/
+
+./blobtools view --remote /Users/solracarias/Dropbox/de_contamination_geminate_panama/c_cyanea_blobt
+
+./blobtools view --remote /Users/solracarias/Dropbox/de_contamination_geminate_panama/p_furcifer_blobt
+
+./blobtools view --remote /Users/solracarias/Dropbox/de_contamination_geminate_panama/c_multilineata_blobt
+
+./blobtools view --remote /Users/solracarias/Dropbox/de_contamination_geminate_panama/c_fulva_blobt
+
+./blobtools view --remote /Users/solracarias/Dropbox/de_contamination_geminate_panama/c_atrilobata_blobt
 
 ```
+
 
 You can play with viewer to change colors on figures, tables etc. Figures and tables can be downloaded and visualized.
 
-```{r}
-#
-#![Blob plot.](HPA_04_pilon.blob.circle.png)
-knitr::include_graphics('HPA_04_pilon.blob.circle.png')
+***Blobtools Results by fish species***
+
+### ***Paranthias colonus***
+#### Assembly statistics in a snail plot
+```{r include=T}
+#Snail plot/
+knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/p_colonus_blob_results/p_colonus_blobt_nb.snail.png')
 ```
+Snail plot summary of assembly statistics for assembly a_troshelii_blobt_nb. The main plot is divided into 1,000 size-ordered bins around the circumference with each bin representing 0.1% of the 796,160,303 bp assembly. The distribution of record lengths is shown in dark grey with the plot radius scaled to the longest record present in the assembly (39,846,712 bp, shown in red). Orange and pale-orange arcs show the N50 and N90 record lengths (28,775,316 and 10,326,087 bp), respectively. The pale grey spiral shows the cumulative record count on a log scale with white scale lines showing successive orders of magnitude. The blue and pale-blue area around the outside of the plot shows the distribution of GC, AT and N percentages in the same bins as the inner plot.
 
-***Blobtools Results***
-
-- Total 486 (# of contigs),580Mb (sum length), 5.7Mb (N50) 
-- Chordata 396 (# of contigs),580Mb (sum length), 5.7Mb (N50) 
-- no-hit 90 (# of contigs),690kb (sum length), 9.1kb (N50)
-
-```{r}
-#![Blob plot.](HPA_04_pilon.blob.circle.png)
-knitr::include_graphics('HPA_04_pilon.cumulative.png')
-```
+#### Cumulative Plot
 
 ```{r}
-#![Blob plot.](HPA_04_pilon.blob.circle.png)
-knitr::include_graphics('HPA_04_pilon.snail.png')
+#cumulative plot
+knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/p_colonus_blob_results/p_colonus_blobt_nb.cumulative.png')
 ```
+Cumulative record length for assembly a_troshelii_blobt_nb. The grey line shows cumulative length for all records. Coloured lines show cumulative lengths of records assigned to each phylum using the bestsumorder taxrule. 
+
+
+#### blob plot
+```{r}
+# blob plot
+knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/p_colonus_blob_results/p_colonus_blobt_nb.blob.circle.png')
+```
+
+Blob plot of base coverage in a against GC proportion for records in assembly a_troshelii_blobt_nb. Records are coloured by phylum. Circles are sized in proportion to record length Histograms show the distribution of record length count along each axis.
+
+#### blob table with varibles and categories
 
 ```{r eval=T, include=T}
-blob_results<- read.csv("bestsumororder_table.csv",header = T, sep = ",")
+blob_results<- read.csv("/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/p_colonus_blob_results/f6235d8a-0f0e-42b2-a6b8-2deeb62a6295.csv",header = T, sep = ",")
+library(tidyverse)
 blob_results<-select(blob_results, -1)
-blob_results_nohits <- blob_results %>% filter(bestsumorder_phylum=="no-hit")
-
-Kraken_blob_results<- merge(blob_results, kraken_results, by.x ="id", by.y = "contig",  all.x=F, all.y=F)
-filt_kraken_blob_results <- filter(Kraken_blob_results, taxon !="Homo sapiens (taxid 9606)" & taxon !="unclassified (taxid 0)")
-filt_kraken_blob_results %>% kbl() %>% kable_styling()
+blob_results2<-select(blob_results, 1,8,2,3,7,4,5,6)
+blob_results2<-select(blob_results2, -1)
+#library(kableExtra)
+#blob_results %>% kbl() %>% kable_styling()
+library(DT)
+options(scipen = 999)
+datatable(blob_results2, rownames = FALSE, width = "100%", colnames = c("ID","GC","Length","Coverage","Phylum", "Class", "Family"),
+          caption =
+            htmltools::tags$caption(
+              style = "caption-side: bottom; text-align: left;",
+              "Table: ",
+              htmltools::em("blob variables and Categories")),
+          extensions = "Buttons",
+          options = list(columnDefs =
+                           list(list(className = "dt-left", targets = 0)),
+                         dom = "Blfrtip", pageLength = 10,
+                         lengthMenu = c(10, 20, 40, 70),
+                         buttons = c("csv", "copy")))
 ```
+
 
 
