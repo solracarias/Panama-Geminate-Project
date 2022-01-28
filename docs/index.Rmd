@@ -400,7 +400,7 @@ Blob plot of base coverage in p against GC proportion for records in  ***C. atri
 
 ```{r eval=T, include=T}
 blob_results<- read.csv("/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/c_atrilobata_blob_results/2ba4906a-f4e2-4662-ab36-67bcde2f380f.csv",header = T, sep = ",")
-#library(tidyverse)
+library(tidyverse)
 blob_results<-select(blob_results, -1)
 blob_results2<-select(blob_results, 1,8,2,3,7,4,5,6)
 blob_results2<-select(blob_results2, -1)
