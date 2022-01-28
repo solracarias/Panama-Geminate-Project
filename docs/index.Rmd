@@ -422,4 +422,52 @@ datatable(blob_results2, rownames = FALSE, width = "100%", colnames = c("ID","GC
                          buttons = c("csv", "copy")))
 ```
 
+### ***Chromis cyanea***
+#### Assembly statistics in a snail plot
+```{r include=T}
+#Snail plot/
+knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/c_cynea_blob_results/c_cyanea_blobtnb.snail.png')
+```
+Snail plot summary of assembly statistics for assembly c_cyanea_blobtnb. The main plot is divided into 1,000 size-ordered bins around the circumference with each bin representing 0.1% of the 858,680,933 bp assembly. The distribution of record lengths is shown in dark grey with the plot radius scaled to the longest record present in the assembly (42,133,999 bp, shown in red). Orange and pale-orange arcs show the N50 and N90 record lengths (35,016,054 and 27,092,967 bp), respectively. The pale grey spiral shows the cumulative record count on a log scale with white scale lines showing successive orders of magnitude. The blue and pale-blue area around the outside of the plot shows the distribution of GC, AT and N percentages in the same bins as the inner plot. 
 
+#### Cumulative Plot
+
+```{r}
+#cumulative plot
+knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/c_cynea_blob_results/c_cyanea_blobtnb.cumulative.png')
+```
+Cumulative record length for assembly c_cyanea_blobtnb.The grey line shows cumulative length for all records. Coloured lines show cumulative lengths of records assigned to each phylum using the bestsumorder taxrule.  
+
+#### blob plot
+```{r}
+# blob plot
+knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/c_cynea_blob_results/c_cyanea_blobtnb.blob.circle.png')
+```
+
+Blob plot of base coverage in p against GC proportion for records in assembly c_cyanea_blobtnb. Records are coloured by phylum. Circles are sized in proportion to record length.
+
+#### blob table with varibles and categories
+
+```{r eval=T, include=T}
+blob_results<- read.csv("/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/c_cynea_blob_results/cd6a4b7f-9e60-40a2-b3e9-cea95e3f60ee.csv",header = T, sep = ",")
+library(tidyverse)
+blob_results<-select(blob_results, -1)
+blob_results2<-select(blob_results, 1,8,2,3,7,4,5,6)
+blob_results2<-select(blob_results2, -1)
+#library(kableExtra)
+#blob_results %>% kbl() %>% kable_styling()
+library(DT)
+options(scipen = 999)
+datatable(blob_results2, rownames = FALSE, width = "100%", colnames = c("ID","GC","Length","Coverage","Phylum", "Class", "Family"),
+          caption =
+            htmltools::tags$caption(
+              style = "caption-side: bottom; text-align: left;",
+              "Table: ",
+              htmltools::em("blob variables and Categories")),
+          extensions = "Buttons",
+          options = list(columnDefs =
+                           list(list(className = "dt-left", targets = 0)),
+                         dom = "Blfrtip", pageLength = 10,
+                         lengthMenu = c(10, 20, 40, 70),
+                         buttons = c("csv", "copy")))
+```
