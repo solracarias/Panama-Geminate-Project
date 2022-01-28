@@ -471,3 +471,53 @@ datatable(blob_results2, rownames = FALSE, width = "100%", colnames = c("ID","GC
                          lengthMenu = c(10, 20, 40, 70),
                          buttons = c("csv", "copy")))
 ```
+
+### ***Abudefduf troshelii***
+#### Assembly statistics in a snail plot
+```{r include=T}
+#Snail plot/
+knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/a_troshelii_blob_results/a_troshelii_blobt_nb.snail.png')
+```
+Snail plot summary of assembly statistics for assembly a_troshelii_blobt_nb. The main plot is divided into 1,000 size-ordered bins around the circumference with each bin representing 0.1% of the 796,160,303 bp assembly. The distribution of record lengths is shown in dark grey with the plot radius scaled to the longest record present in the assembly (39,846,712 bp, shown in red). Orange and pale-orange arcs show the N50 and N90 record lengths (28,775,316 and 10,326,087 bp), respectively. The pale grey spiral shows the cumulative record count on a log scale with white scale lines showing successive orders of magnitude. The blue and pale-blue area around the outside of the plot shows the distribution of GC, AT and N percentages in the same bins as the inner plot.
+
+#### Cumulative Plot
+
+```{r}
+#cumulative plot
+knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/a_troshelii_blob_results/a_troshelii_blobt_nb.cumulative.png')
+```
+Cumulative record length for assembly a_troshelii_blobt_nb.The grey line shows cumulative length for all records. Coloured lines show cumulative lengths of records assigned to each phylum using the bestsumorder taxrule.  
+
+#### blob plot
+```{r}
+# blob plot
+knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/a_troshelii_blob_results/a_troshelii_blobt_nb.blob.circle.png')
+```
+
+Blob plot of base coverage in p against GC proportion for records in assembly a_troshelii_blobt_nb. Records are coloured by phylum. Circles are sized in proportion to record length.
+
+#### blob table with varibles and categories
+
+```{r eval=T, include=T}
+blob_results<- read.csv("/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/a_troshelii_blob_results/00ff4f5e-bd43-4c48-b4c8-9e2e9b971300.csv",header = T, sep = ",")
+library(tidyverse)
+blob_results<-select(blob_results, -1)
+blob_results2<-select(blob_results, 1,8,2,3,7,4,5,6)
+blob_results2<-select(blob_results2, -1)
+#library(kableExtra)
+#blob_results %>% kbl() %>% kable_styling()
+library(DT)
+options(scipen = 999)
+datatable(blob_results2, rownames = FALSE, width = "100%", colnames = c("ID","GC","Length","Coverage","Phylum", "Class", "Family"),
+          caption =
+            htmltools::tags$caption(
+              style = "caption-side: bottom; text-align: left;",
+              "Table: ",
+              htmltools::em("blob variables and Categories")),
+          extensions = "Buttons",
+          options = list(columnDefs =
+                           list(list(className = "dt-left", targets = 0)),
+                         dom = "Blfrtip", pageLength = 10,
+                         lengthMenu = c(10, 20, 40, 70),
+                         buttons = c("csv", "copy")))
+```
