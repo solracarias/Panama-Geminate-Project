@@ -10,7 +10,8 @@ output:
 ---
 # Genome contamination Analysis
 
-This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook for contamination analysis in genome assembly projects. Here, we explain how we ran contamination analysis using blobtools kit.
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook for Quality Check and contamination analysis in genome assembly projects. We use GenomeScope and Blobtools programs to check the quality of the our data and our genome assemblies.
+
 
 What is blobtools?
 
@@ -176,12 +177,12 @@ You can play with viewer to change colors on figures, tables etc. Figures and ta
 #### GenomeScope Results
 
 ```{r include=T}
-#Snail plot/
+#GenomeScope Resutls
 knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/p_colonus_blob_results/linear_plot.png')
 ```
 
 ```{r include=T}
-#Snail plot/
+#GenomeScope Resutls
 knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/p_colonus_blob_results/log_plot.png')
 ```
 
@@ -240,12 +241,12 @@ datatable(blob_results2, rownames = FALSE, width = "100%", colnames = c("ID","GC
 #### GenomeScope Results
 
 ```{r include=T}
-#Snail plot/
+#GenomeScope Resutls
 knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/p_furcifer_blob_results/linear_plot.png')
 ```
 
 ```{r include=T}
-#Snail plot/
+#GenomeScope Resutls
 knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/p_furcifer_blob_results/log_plot.png')
 ```
 
@@ -304,12 +305,12 @@ datatable(blob_results2, rownames = FALSE, width = "100%", colnames = c("ID","GC
 #### GenomeScope Results
 
 ```{r include=T}
-#Snail plot/
+#GenomeScope Resutls
 knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/c_fulva_blob_results/linear_plot.png')
 ```
 
 ```{r include=T}
-#Snail plot/
+#GenomeScope Resutls
 knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/c_fulva_blob_results/log_plot.png')
 ```
 
@@ -367,12 +368,12 @@ datatable(blob_results2, rownames = FALSE, width = "100%", colnames = c("ID","GC
 #### GenomeScope Results
 
 ```{r include=T}
-#Snail plot/
+#GenomeScope Resutls
 knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/c_multilineata_blob_results/linear_plot.png')
 ```
 
 ```{r include=T}
-#Snail plot/
+#GenomeScope Resutls
 knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/c_multilineata_blob_results/log_plot.png')
 ```
 
@@ -430,12 +431,12 @@ datatable(blob_results2, rownames = FALSE, width = "100%", colnames = c("ID","GC
 #### GenomeScope Results
 
 ```{r include=T}
-#Snail plot/
+#GenomeScope Resutls
 knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/c_atrilobata_blob_results/linear_plot.png')
 ```
 
 ```{r include=T}
-#Snail plot/
+#GenomeScope Resutls
 knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/c_atrilobata_blob_results/log_plot.png')
 ```
 
@@ -493,12 +494,12 @@ datatable(blob_results2, rownames = FALSE, width = "100%", colnames = c("ID","GC
 #### GenomeScope Results
 
 ```{r include=T}
-#Snail plot/
+#GenomeScope Resutls
 knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/c_cynea_blob_results/linear_plot.png')
 ```
 
 ```{r include=T}
-#Snail plot/
+#GenomeScope Resutls
 knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/c_cynea_blob_results/log_plot.png')
 ```
 
@@ -556,12 +557,12 @@ datatable(blob_results2, rownames = FALSE, width = "100%", colnames = c("ID","GC
 #### GenomeScope Results
 
 ```{r include=T}
-#Snail plot/
+#GenomeScope Resutls
 knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/a_troshelii_blob_results/linear_plot.png')
 ```
 
 ```{r include=T}
-#Snail plot/
+#GenomeScope Resutls
 knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/a_troshelii_blob_results/log_plot.png')
 ```
 
