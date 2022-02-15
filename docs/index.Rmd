@@ -173,7 +173,7 @@ You can play with viewer to change colors on figures, tables etc. Figures and ta
 
 ### ***Paranthias colonus***
 
-### GenomeScope Results
+#### GenomeScope Results
 
 ```{r include=T}
 #Snail plot/
@@ -236,6 +236,20 @@ datatable(blob_results2, rownames = FALSE, width = "100%", colnames = c("ID","GC
 ```
 
 ### ***Paranthias furcifer***
+
+#### GenomeScope Results
+
+```{r include=T}
+#Snail plot/
+knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/p_furcifer_blob_results/linear_plot.png')
+```
+
+```{r include=T}
+#Snail plot/
+knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/p_furcifer_blob_results/log_plot.png')
+```
+
+
 #### Assembly statistics in a snail plot
 ```{r include=T}
 #Snail plot/
@@ -286,6 +300,19 @@ datatable(blob_results2, rownames = FALSE, width = "100%", colnames = c("ID","GC
 ```
 
 ### ***Cephalopholis fulva***
+
+#### GenomeScope Results
+
+```{r include=T}
+#Snail plot/
+knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/c_fulva_blob_results/linear_plot.png')
+```
+
+```{r include=T}
+#Snail plot/
+knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/c_fulva_blob_results/log_plot.png')
+```
+
 #### Assembly statistics in a snail plot
 ```{r include=T}
 #Snail plot/
@@ -336,6 +363,19 @@ datatable(blob_results2, rownames = FALSE, width = "100%", colnames = c("ID","GC
 ```
 
 ### ***Chromis multilineata***
+
+#### GenomeScope Results
+
+```{r include=T}
+#Snail plot/
+knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/c_multilineata_blob_results/linear_plot.png')
+```
+
+```{r include=T}
+#Snail plot/
+knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/c_multilineata_blob_results/log_plot.png')
+```
+
 #### Assembly statistics in a snail plot
 ```{r include=T}
 #Snail plot/
@@ -386,6 +426,19 @@ datatable(blob_results2, rownames = FALSE, width = "100%", colnames = c("ID","GC
 ```
 
 ### ***Chromis atriloba***
+
+#### GenomeScope Results
+
+```{r include=T}
+#Snail plot/
+knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/c_atrilobata_blob_results/linear_plot.png')
+```
+
+```{r include=T}
+#Snail plot/
+knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/c_atrilobata_blob_results/log_plot.png')
+```
+
 #### Assembly statistics in a snail plot
 ```{r include=T}
 #Snail plot/
@@ -436,6 +489,19 @@ datatable(blob_results2, rownames = FALSE, width = "100%", colnames = c("ID","GC
 ```
 
 ### ***Chromis cyanea***
+
+#### GenomeScope Results
+
+```{r include=T}
+#Snail plot/
+knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/c_cynea_blob_results/linear_plot.png')
+```
+
+```{r include=T}
+#Snail plot/
+knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/c_cynea_blob_results/log_plot.png')
+```
+
 #### Assembly statistics in a snail plot
 ```{r include=T}
 #Snail plot/
@@ -486,6 +552,20 @@ datatable(blob_results2, rownames = FALSE, width = "100%", colnames = c("ID","GC
 ```
 
 ### ***Abudefduf troshelii***
+
+#### GenomeScope Results
+
+```{r include=T}
+#Snail plot/
+knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/a_troshelii_blob_results/linear_plot.png')
+```
+
+```{r include=T}
+#Snail plot/
+knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/a_troshelii_blob_results/log_plot.png')
+```
+
+
 #### Assembly statistics in a snail plot
 ```{r include=T}
 #Snail plot/
