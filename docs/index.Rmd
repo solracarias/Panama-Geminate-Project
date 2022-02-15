@@ -151,17 +151,17 @@ rclone copy blob_database  db3:hydra_backup/
 
 #activate conda enviroment for blobtools2
 conda activate btk_env
-./blobtools view --remote /Users/solracarias/Dropbox/de_contamination_geminate_panama/c_atrilobata_blobt/
+./blobtools view --remote /Users/ariasc/Dropbox/de_contamination_geminate_panama/c_atrilobata_blobt/
 
-./blobtools view --remote /Users/solracarias/Dropbox/de_contamination_geminate_panama/c_cyanea_blobt
+./blobtools view --remote /Users/ariasc/Dropbox/de_contamination_geminate_panama/c_cyanea_blobt
 
-./blobtools view --remote /Users/solracarias/Dropbox/de_contamination_geminate_panama/p_furcifer_blobt
+./blobtools view --remote /Users/ariasc/Dropbox/de_contamination_geminate_panama/p_furcifer_blobt
 
-./blobtools view --remote /Users/solracarias/Dropbox/de_contamination_geminate_panama/c_multilineata_blobt
+./blobtools view --remote /Users/ariasc/Dropbox/de_contamination_geminate_panama/c_multilineata_blobt
 
-./blobtools view --remote /Users/solracarias/Dropbox/de_contamination_geminate_panama/c_fulva_blobt
+./blobtools view --remote /Users/ariasc/Dropbox/de_contamination_geminate_panama/c_fulva_blobt
 
-./blobtools view --remote /Users/solracarias/Dropbox/de_contamination_geminate_panama/c_atrilobata_blobt
+./blobtools view --remote /Users/ariasc/Dropbox/de_contamination_geminate_panama/c_atrilobata_blobt
 
 ```
 
@@ -172,10 +172,23 @@ You can play with viewer to change colors on figures, tables etc. Figures and ta
 #### Blobtools Results by fish species
 
 ### ***Paranthias colonus***
+
+### GenomeScope Results
+
+```{r include=T}
+#Snail plot/
+knitr::include_graphics('/Users/ariasc/Dropbox/Panama-Geminate-Project/docs/p_colonus_blob_results/linear_plot.png')
+```
+
+```{r include=T}
+#Snail plot/
+knitr::include_graphics('/Users/ariasc/Dropbox/Panama-Geminate-Project/docs/p_colonus_blob_results/log_plot.png')
+```
+
 #### Assembly statistics in a snail plot
 ```{r include=T}
 #Snail plot/
-knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/p_colonus_blob_results/p_colonus_blobt_nb.snail.png')
+knitr::include_graphics('/Users/ariasc/Dropbox/Panama-Geminate-Project/docs/p_colonus_blob_results/p_colonus_blobt_nb.snail.png')
 ```
 Snail plot summary of assembly statistics for P. colonus. The main plot is divided into 1,000 size-ordered bins around the circumference with each bin representing 0.1% of the 796,160,303 bp assembly. The distribution of record lengths is shown in dark grey with the plot radius scaled to the longest record present in the assembly (39,846,712 bp, shown in red). Orange and pale-orange arcs show the N50 and N90 record lengths (28,775,316 and 10,326,087 bp), respectively. The pale grey spiral shows the cumulative record count on a log scale with white scale lines showing successive orders of magnitude. The blue and pale-blue area around the outside of the plot shows the distribution of GC, AT and N percentages in the same bins as the inner plot.
 
@@ -183,7 +196,7 @@ Snail plot summary of assembly statistics for P. colonus. The main plot is divid
 
 ```{r}
 #cumulative plot
-knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/p_colonus_blob_results/p_colonus_blobt_nb.cumulative.png')
+knitr::include_graphics('/Users/ariasc/Dropbox/Panama-Geminate-Project/docs/p_colonus_blob_results/p_colonus_blobt_nb.cumulative.png')
 ```
 Cumulative record length for P. colonus. The grey line shows cumulative length for all records. Coloured lines show cumulative lengths of records assigned to each phylum using the bestsumorder taxrule. 
 
@@ -191,7 +204,7 @@ Cumulative record length for P. colonus. The grey line shows cumulative length f
 #### blob plot
 ```{r}
 # blob plot
-knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/p_colonus_blob_results/p_colonus_blobt_nb.blob.circle.png')
+knitr::include_graphics('/Users/ariasc/Dropbox/Panama-Geminate-Project/docs/p_colonus_blob_results/p_colonus_blobt_nb.blob.circle.png')
 ```
 
 Blob plot of base coverage in a against GC proportion for records in assembly P. colonus. Records are coloured by phylum. Circles are sized in proportion to record length Histograms show the distribution of record length count along each axis.
@@ -199,7 +212,7 @@ Blob plot of base coverage in a against GC proportion for records in assembly P.
 #### blob table with varibles and categories
 
 ```{r eval=T, include=T}
-blob_results<- read.csv("/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/p_colonus_blob_results/f6235d8a-0f0e-42b2-a6b8-2deeb62a6295.csv",header = T, sep = ",")
+blob_results<- read.csv("/Users/ariasc/Dropbox/Panama-Geminate-Project/docs/p_colonus_blob_results/f6235d8a-0f0e-42b2-a6b8-2deeb62a6295.csv",header = T, sep = ",")
 library(tidyverse)
 blob_results<-select(blob_results, -1)
 blob_results2<-select(blob_results, 1,8,2,3,7,4,5,6)
@@ -226,7 +239,7 @@ datatable(blob_results2, rownames = FALSE, width = "100%", colnames = c("ID","GC
 #### Assembly statistics in a snail plot
 ```{r include=T}
 #Snail plot/
-knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/p_furcifer_blob_results/p_furcifer_blobt_nb.snail.png')
+knitr::include_graphics('/Users/ariasc/Dropbox/Panama-Geminate-Project/docs/p_furcifer_blob_results/p_furcifer_blobt_nb.snail.png')
 ```
 Snail plot summary of assembly statistics for ***P. furcifer***.The main plot is divided into 1,000 size-ordered bins around the circumference with each bin representing 0.1% of the 860,147,216 bp assembly. The distribution of record lengths is shown in dark grey with the plot radius scaled to the longest record present in the assembly (38,289,793 bp, shown in red). Orange and pale-orange arcs show the N50 and N90 record lengths (32,505,010 and 23,558,019 bp), respectively. The pale grey spiral shows the cumulative record count on a log scale with white scale lines showing successive orders of magnitude. The blue and pale-blue area around the outside of the plot shows the distribution of GC, AT and N percentages in the same bins as the inner plot.
 
@@ -234,14 +247,14 @@ Snail plot summary of assembly statistics for ***P. furcifer***.The main plot is
 
 ```{r}
 #cumulative plot
-knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/p_furcifer_blob_results/p_furcifer_blobt_nb.cumulative.png')
+knitr::include_graphics('/Users/ariasc/Dropbox/Panama-Geminate-Project/docs/p_furcifer_blob_results/p_furcifer_blobt_nb.cumulative.png')
 ```
 Cumulative record length for ***P. furcifer***. The grey line shows cumulative length for all records. Coloured lines show cumulative lengths of records assigned to each phylum using the bestsumorder taxrule.  
 
 #### blob plot
 ```{r}
 # blob plot
-knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/p_furcifer_blob_results/p_furcifer_blobt_nb.blob.circle.png')
+knitr::include_graphics('/Users/ariasc/Dropbox/Panama-Geminate-Project/docs/p_furcifer_blob_results/p_furcifer_blobt_nb.blob.circle.png')
 ```
 
 Blob plot of base coverage in p against GC proportion for records in ***P. furcifer*** assembly . Records are coloured by phylum. Circles are sized in proportion to record length Histograms show the distribution of record length sum along each axis.
@@ -249,7 +262,7 @@ Blob plot of base coverage in p against GC proportion for records in ***P. furci
 #### blob table with varibles and categories
 
 ```{r eval=T, include=T}
-blob_results<- read.csv("//Users/solracarias/Dropbox/Panama-Geminate-Project/docs/p_furcifer_blob_results/7fc11af9-8af0-4b87-a060-df69dfa56242.csv",header = T, sep = ",")
+blob_results<- read.csv("//Users/ariasc/Dropbox/Panama-Geminate-Project/docs/p_furcifer_blob_results/7fc11af9-8af0-4b87-a060-df69dfa56242.csv",header = T, sep = ",")
 library(tidyverse)
 blob_results<-select(blob_results, -1)
 blob_results2<-select(blob_results, 1,8,2,3,7,4,5,6)
@@ -276,7 +289,7 @@ datatable(blob_results2, rownames = FALSE, width = "100%", colnames = c("ID","GC
 #### Assembly statistics in a snail plot
 ```{r include=T}
 #Snail plot/
-knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/c_fulva_blob_results/c_fulva_blobt_nb.snail.png')
+knitr::include_graphics('/Users/ariasc/Dropbox/Panama-Geminate-Project/docs/c_fulva_blob_results/c_fulva_blobt_nb.snail.png')
 ```
 Snail plot summary of assembly statistics for  ***C.fulva***. The main plot is divided into 1,000 size-ordered bins around the circumference with each bin representing 0.1% of the 1,002,268,578 bp assembly. The distribution of record lengths is shown in dark grey with the plot radius scaled to the longest record present in the assembly (50,486,710 bp, shown in red). Orange and pale-orange arcs show the N50 and N90 record lengths (42,467,878 and 31,280,464 bp), respectively. The pale grey spiral shows the cumulative record count on a log scale with white scale lines showing successive orders of magnitude. The blue and pale-blue area around the outside of the plot shows the distribution of GC, AT and N percentages in the same bins as the inner plot.
 
@@ -284,14 +297,14 @@ Snail plot summary of assembly statistics for  ***C.fulva***. The main plot is d
 
 ```{r}
 #cumulative plot
-knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/c_fulva_blob_results/c_fulva_blobt_nb.cumulative.png')
+knitr::include_graphics('/Users/ariasc/Dropbox/Panama-Geminate-Project/docs/c_fulva_blob_results/c_fulva_blobt_nb.cumulative.png')
 ```
 Cumulative record length for ***c_fulva***. The grey line shows cumulative length for all records. Coloured lines show cumulative lengths of records assigned to each phylum using the bestsumorder taxrule.  
 
 #### blob plot
 ```{r}
 # blob plot
-knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/c_fulva_blob_results/c_fulva_blobt_nb.blob.circle.png')
+knitr::include_graphics('/Users/ariasc/Dropbox/Panama-Geminate-Project/docs/c_fulva_blob_results/c_fulva_blobt_nb.blob.circle.png')
 ```
 
 Blob plot of base coverage in p against GC proportion for records in ***C. fulva*** assembly. Records are coloured by phylum. Circles are sized in proportion to record length.
@@ -299,7 +312,7 @@ Blob plot of base coverage in p against GC proportion for records in ***C. fulva
 #### blob table with varibles and categories
 
 ```{r eval=T, include=T}
-blob_results<- read.csv("/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/c_fulva_blob_results/8e78fbed-8511-4f58-865d-007ee7d110fc.csv",header = T, sep = ",")
+blob_results<- read.csv("/Users/ariasc/Dropbox/Panama-Geminate-Project/docs/c_fulva_blob_results/8e78fbed-8511-4f58-865d-007ee7d110fc.csv",header = T, sep = ",")
 #library(tidyverse)
 blob_results<-select(blob_results, -1)
 blob_results2<-select(blob_results, 1,8,2,3,7,4,5,6)
@@ -326,7 +339,7 @@ datatable(blob_results2, rownames = FALSE, width = "100%", colnames = c("ID","GC
 #### Assembly statistics in a snail plot
 ```{r include=T}
 #Snail plot/
-knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/c_multilineata_blob_results/c_multilineata_blobt_nb.snail.png')
+knitr::include_graphics('/Users/ariasc/Dropbox/Panama-Geminate-Project/docs/c_multilineata_blob_results/c_multilineata_blobt_nb.snail.png')
 ```
 Snail plot summary of assembly statistics for ***C. multilineata***. The main plot is divided into 1,000 size-ordered bins around the circumference with each bin representing 0.1% of the 789,373,866 bp assembly. The distribution of record lengths is shown in dark grey with the plot radius scaled to the longest record present in the assembly (38,245,747 bp, shown in red). Orange and pale-orange arcs show the N50 and N90 record lengths (34,048,903 and 27,186,901 bp), respectively. The pale grey spiral shows the cumulative record count on a log scale with white scale lines showing successive orders of magnitude. The blue and pale-blue area around the outside of the plot shows the distribution of GC, AT and N percentages in the same bins as the inner plot. 
 
@@ -334,14 +347,14 @@ Snail plot summary of assembly statistics for ***C. multilineata***. The main pl
 
 ```{r}
 #cumulative plot
-knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/c_multilineata_blob_results/c_multilineata_blobt_nb.cumulative.png')
+knitr::include_graphics('/Users/ariasc/Dropbox/Panama-Geminate-Project/docs/c_multilineata_blob_results/c_multilineata_blobt_nb.cumulative.png')
 ```
 Cumulative record length for ***C. multilineata*** assembly. The grey line shows cumulative length for all records. Coloured lines show cumulative lengths of records assigned to each phylum using the bestsumorder taxrule.  
 
 #### blob plot
 ```{r}
 # blob plot
-knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/c_multilineata_blob_results/c_multilineata_blobt_nb.blob.circle.png')
+knitr::include_graphics('/Users/ariasc/Dropbox/Panama-Geminate-Project/docs/c_multilineata_blob_results/c_multilineata_blobt_nb.blob.circle.png')
 ```
 
 Blob plot of base coverage in p against GC proportion for records in ***C. multilineata*** assembly. Records are coloured by phylum. Circles are sized in proportion to record length.
@@ -349,7 +362,7 @@ Blob plot of base coverage in p against GC proportion for records in ***C. multi
 #### blob table with varibles and categories
 
 ```{r eval=T, include=T}
-blob_results<- read.csv("/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/c_multilineata_blob_results/2a719209-31ee-4daa-bf74-cf1424f52538.csv",header = T, sep = ",")
+blob_results<- read.csv("/Users/ariasc/Dropbox/Panama-Geminate-Project/docs/c_multilineata_blob_results/2a719209-31ee-4daa-bf74-cf1424f52538.csv",header = T, sep = ",")
 library(tidyverse)
 blob_results<-select(blob_results, -1)
 blob_results2<-select(blob_results, 1,8,2,3,7,4,5,6)
@@ -376,7 +389,7 @@ datatable(blob_results2, rownames = FALSE, width = "100%", colnames = c("ID","GC
 #### Assembly statistics in a snail plot
 ```{r include=T}
 #Snail plot/
-knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/c_atrilobata_blob_results/c_atrilobata_blobt_nb.snail.png')
+knitr::include_graphics('/Users/ariasc/Dropbox/Panama-Geminate-Project/docs/c_atrilobata_blob_results/c_atrilobata_blobt_nb.snail.png')
 ```
 Snail plot summary of assembly statistics for ***C. atrilobata. The main plot is divided into 1,000 size-ordered bins around the circumference with each bin representing 0.1% of the 817,061,737 bp assembly. The distribution of record lengths is shown in dark grey with the plot radius scaled to the longest record present in the assembly (35,142,365 bp, shown in red). Orange and pale-orange arcs show the N50 and N90 record lengths (26,205,343 and 869,398 bp), respectively. The pale grey spiral shows the cumulative record count on a log scale with white scale lines showing successive orders of magnitude. The blue and pale-blue area around the outside of the plot shows the distribution of GC, AT and N percentages in the same bins as the inner plot. 
 
@@ -384,14 +397,14 @@ Snail plot summary of assembly statistics for ***C. atrilobata. The main plot is
 
 ```{r}
 #cumulative plot
-knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/c_atrilobata_blob_results/c_atrilobata_blobt_nb.cumulative.png')
+knitr::include_graphics('/Users/ariasc/Dropbox/Panama-Geminate-Project/docs/c_atrilobata_blob_results/c_atrilobata_blobt_nb.cumulative.png')
 ```
 Cumulative record length for ***C. atrilobata*** assembly. The grey line shows cumulative length for all records. Coloured lines show cumulative lengths of records assigned to each phylum using the bestsumorder taxrule.  
 
 #### blob plot
 ```{r}
 # blob plot
-knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/c_atrilobata_blob_results/c_atrilobata_blobt_nb.blob.circle.png')
+knitr::include_graphics('/Users/ariasc/Dropbox/Panama-Geminate-Project/docs/c_atrilobata_blob_results/c_atrilobata_blobt_nb.blob.circle.png')
 ```
 
 Blob plot of base coverage in p against GC proportion for records in  ***C. atrilobata*** assembly. Records are coloured by phylum. Circles are sized in proportion to record length.
@@ -399,7 +412,7 @@ Blob plot of base coverage in p against GC proportion for records in  ***C. atri
 #### blob table with varibles and categories
 
 ```{r eval=T, include=T}
-blob_results<- read.csv("/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/c_atrilobata_blob_results/2ba4906a-f4e2-4662-ab36-67bcde2f380f.csv",header = T, sep = ",")
+blob_results<- read.csv("/Users/ariasc/Dropbox/Panama-Geminate-Project/docs/c_atrilobata_blob_results/2ba4906a-f4e2-4662-ab36-67bcde2f380f.csv",header = T, sep = ",")
 library(tidyverse)
 blob_results<-select(blob_results, -1)
 blob_results2<-select(blob_results, 1,8,2,3,7,4,5,6)
@@ -426,7 +439,7 @@ datatable(blob_results2, rownames = FALSE, width = "100%", colnames = c("ID","GC
 #### Assembly statistics in a snail plot
 ```{r include=T}
 #Snail plot/
-knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/c_cynea_blob_results/c_cyanea_blobtnb.snail.png')
+knitr::include_graphics('/Users/ariasc/Dropbox/Panama-Geminate-Project/docs/c_cynea_blob_results/c_cyanea_blobtnb.snail.png')
 ```
 Snail plot summary of assembly statistics for  ***C._cyanea***. The main plot is divided into 1,000 size-ordered bins around the circumference with each bin representing 0.1% of the 858,680,933 bp assembly. The distribution of record lengths is shown in dark grey with the plot radius scaled to the longest record present in the assembly (42,133,999 bp, shown in red). Orange and pale-orange arcs show the N50 and N90 record lengths (35,016,054 and 27,092,967 bp), respectively. The pale grey spiral shows the cumulative record count on a log scale with white scale lines showing successive orders of magnitude. The blue and pale-blue area around the outside of the plot shows the distribution of GC, AT and N percentages in the same bins as the inner plot. 
 
@@ -434,14 +447,14 @@ Snail plot summary of assembly statistics for  ***C._cyanea***. The main plot is
 
 ```{r}
 #cumulative plot
-knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/c_cynea_blob_results/c_cyanea_blobtnb.cumulative.png')
+knitr::include_graphics('/Users/ariasc/Dropbox/Panama-Geminate-Project/docs/c_cynea_blob_results/c_cyanea_blobtnb.cumulative.png')
 ```
 Cumulative record length for ***C. cyanea*** assembly.The grey line shows cumulative length for all records. Coloured lines show cumulative lengths of records assigned to each phylum using the bestsumorder taxrule.  
 
 #### blob plot
 ```{r}
 # blob plot
-knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/c_cynea_blob_results/c_cyanea_blobtnb.blob.circle.png')
+knitr::include_graphics('/Users/ariasc/Dropbox/Panama-Geminate-Project/docs/c_cynea_blob_results/c_cyanea_blobtnb.blob.circle.png')
 ```
 
 Blob plot of base coverage in p against GC proportion for records in ***C. cyanea*** assembly. Records are coloured by phylum. Circles are sized in proportion to record length.
@@ -449,7 +462,7 @@ Blob plot of base coverage in p against GC proportion for records in ***C. cyane
 #### blob table with varibles and categories
 
 ```{r eval=T, include=T}
-blob_results<- read.csv("/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/c_cynea_blob_results/cd6a4b7f-9e60-40a2-b3e9-cea95e3f60ee.csv",header = T, sep = ",")
+blob_results<- read.csv("/Users/ariasc/Dropbox/Panama-Geminate-Project/docs/c_cynea_blob_results/cd6a4b7f-9e60-40a2-b3e9-cea95e3f60ee.csv",header = T, sep = ",")
 #library(tidyverse)
 blob_results<-select(blob_results, -1)
 blob_results2<-select(blob_results, 1,8,2,3,7,4,5,6)
@@ -476,7 +489,7 @@ datatable(blob_results2, rownames = FALSE, width = "100%", colnames = c("ID","GC
 #### Assembly statistics in a snail plot
 ```{r include=T}
 #Snail plot/
-knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/a_troshelii_blob_results/a_troshelii_blobt_nb.snail.png')
+knitr::include_graphics('/Users/ariasc/Dropbox/Panama-Geminate-Project/docs/a_troshelii_blob_results/a_troshelii_blobt_nb.snail.png')
 ```
 Snail plot summary of assembly statistics for  ***A_troshelii***. The main plot is divided into 1,000 size-ordered bins around the circumference with each bin representing 0.1% of the 796,160,303 bp assembly. The distribution of record lengths is shown in dark grey with the plot radius scaled to the longest record present in the assembly (39,846,712 bp, shown in red). Orange and pale-orange arcs show the N50 and N90 record lengths (28,775,316 and 10,326,087 bp), respectively. The pale grey spiral shows the cumulative record count on a log scale with white scale lines showing successive orders of magnitude. The blue and pale-blue area around the outside of the plot shows the distribution of GC, AT and N percentages in the same bins as the inner plot.
 
@@ -484,14 +497,14 @@ Snail plot summary of assembly statistics for  ***A_troshelii***. The main plot 
 
 ```{r}
 #cumulative plot
-knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/a_troshelii_blob_results/a_troshelii_blobt_nb.cumulative.png')
+knitr::include_graphics('/Users/ariasc/Dropbox/Panama-Geminate-Project/docs/a_troshelii_blob_results/a_troshelii_blobt_nb.cumulative.png')
 ```
 Cumulative record length for ***A._troshelii*** assembly .The grey line shows cumulative length for all records. Coloured lines show cumulative lengths of records assigned to each phylum using the bestsumorder taxrule.  
 
 #### blob plot
 ```{r}
 # blob plot
-knitr::include_graphics('/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/a_troshelii_blob_results/a_troshelii_blobt_nb.blob.circle.png')
+knitr::include_graphics('/Users/ariasc/Dropbox/Panama-Geminate-Project/docs/a_troshelii_blob_results/a_troshelii_blobt_nb.blob.circle.png')
 ```
 
 Blob plot of base coverage in p against GC proportion for records in ***A. troshelii*** assembly. Records are coloured by phylum. Circles are sized in proportion to record length.
@@ -499,7 +512,7 @@ Blob plot of base coverage in p against GC proportion for records in ***A. trosh
 #### blob table with varibles and categories
 
 ```{r eval=T, include=T}
-blob_results<- read.csv("/Users/solracarias/Dropbox/Panama-Geminate-Project/docs/a_troshelii_blob_results/00ff4f5e-bd43-4c48-b4c8-9e2e9b971300.csv",header = T, sep = ",")
+blob_results<- read.csv("/Users/ariasc/Dropbox/Panama-Geminate-Project/docs/a_troshelii_blob_results/00ff4f5e-bd43-4c48-b4c8-9e2e9b971300.csv",header = T, sep = ",")
 #library(tidyverse)
 blob_results<-select(blob_results, -1)
 blob_results2<-select(blob_results, 1,8,2,3,7,4,5,6)
